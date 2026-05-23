@@ -13,22 +13,26 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+
 resource "aws_instance" "bastion" {
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = var.instance_type
-  subnet_id              = var.public_subnet_id
-  vpc_security_group_ids = [var.bastion_sg_id]
-  key_name               = var.key_name
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = var.instance_type
+  subnet_id                   = var.public_subnet_id
+  vpc_security_group_ids      = [var.bastion_sg_id]
+  key_name                    = var.key_name
+  associate_public_ip_address = true  
 
   tags = { Name = "${var.project_name}-bastion" }
 }
 
+
 resource "aws_instance" "app" {
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = var.instance_type
-  subnet_id              = var.private_subnet_id
-  vpc_security_group_ids = [var.app_sg_id]
-  key_name               = var.key_name
+  ami                         = data.aws_ami.amazon_linux.id
+  instance_type               = var.instance_type
+  subnet_id                   = var.private_subnet_id
+  vpc_security_group_ids      = [var.app_sg_id]
+  key_name                    = var.key_name
+  associate_public_ip_address = false  
 
   tags = { Name = "${var.project_name}-app" }
 }

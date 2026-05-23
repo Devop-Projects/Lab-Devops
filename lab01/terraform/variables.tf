@@ -38,3 +38,8 @@ variable "key_name" {
   description = "Ten EC2 Key Pair da tao tren AWS Console (de SSH vao may)"
   type        = string
 }
+
+variable "my_ip" {
+  description = "IP cua ban de SSH vao Bastion (chay: curl ifconfig.me roi them /32)"
+  type        = string
+}

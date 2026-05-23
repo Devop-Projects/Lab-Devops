@@ -1,17 +1,18 @@
 resource "aws_security_group" "bastion" {
   name        = "${var.project_name}-bastion-sg"
-  description = "SG for Bastion Host — SSH gateway"
+  description = "SG for Bastion Host — SSH only from admin IP"
   vpc_id      = var.vpc_id
 
   ingress {
-    description = "SSH from anywhere"
+    description = "SSH only from my IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.my_ip]   
   }
 
   egress {
+    description = "Allow all outbound"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -20,6 +21,7 @@ resource "aws_security_group" "bastion" {
 
   tags = { Name = "${var.project_name}-bastion-sg" }
 }
+
 
 resource "aws_security_group" "app" {
   name        = "${var.project_name}-app-sg"
@@ -35,7 +37,7 @@ resource "aws_security_group" "app" {
   }
 
   ingress {
-    description = "App port from within VPC"
+    description = "App port 3000 from within VPC"
     from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
@@ -43,6 +45,7 @@ resource "aws_security_group" "app" {
   }
 
   egress {
+    description = "Allow all outbound (qua NAT Gateway)"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -50,4 +53,12 @@ resource "aws_security_group" "app" {
   }
 
   tags = { Name = "${var.project_name}-app-sg" }
+}
+
+
+resource "aws_default_security_group" "default" {
+  vpc_id = var.vpc_id
+
+
+  tags = { Name = "${var.project_name}-default-sg" }
 }
