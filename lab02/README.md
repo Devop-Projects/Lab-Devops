@@ -259,7 +259,7 @@ Vào **Repository → Settings → Secrets and variables → Actions → New rep
 |---|---|
 | `AWS_ACCESS_KEY_ID` | Access Key ID từ bước 1 |
 | `AWS_SECRET_ACCESS_KEY` | Secret Access Key từ bước 1 |
-| `MY_IP` | IP của bạn + `/32` (ví dụ: `1.54.154.11/32`) |
+| `MY_IP` | IP của bạn + `/32` (ví dụ: `100.31.16.42/32`) |
 | `KEY_NAME` | Tên Key Pair từ bước 2 (ví dụ: `lab02-keypair`) |
 
 ### Bước 4 — Tạo GitHub Environment
