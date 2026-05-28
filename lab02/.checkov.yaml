@@ -15,6 +15,20 @@ skip-check:
   - CKV2_AWS_41
   # CKV_AWS_338: CloudWatch log retention > 1 năm — 7 ngày đủ cho Lab
   - CKV_AWS_338
+    # Bastion bắt buộc có Public IP
+  - CKV_AWS_88
+  # t3.micro không hỗ trợ EBS Optimized
+  - CKV_AWS_135
+  # Egress 0.0.0.0/0 bình thường cho EC2
+  - CKV_AWS_382
+  # False positive — rule dùng SG reference không phải 0.0.0.0/0
+  - CKV_AWS_24
+  # False positive — Checkov không detect SG gắn qua module
+  - CKV2_AWS_5
+  # False positive — check sai resource
+  - CKV2_AWS_12
+  # KMS cho CloudWatch tốn tiền, không cần cho Lab
+  - CKV_AWS_158
 
 # Xuất kết quả dưới dạng JSON để CI/CD xử lý
 output: cli
