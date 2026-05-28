@@ -34,7 +34,7 @@ resource "aws_instance" "bastion" {
   root_block_device {
     encrypted   = true # Checkov yêu cầu: mã hóa EBS volume
     volume_type = "gp3"
-    volume_size = 8
+    volume_size = 30
   }
 
   tags = { Name = "${var.project_name}-bastion" }
@@ -60,7 +60,7 @@ resource "aws_instance" "app" {
   root_block_device {
     encrypted   = true
     volume_type = "gp3"
-    volume_size = 8
+    volume_size = 30
   }
 
   tags = { Name = "${var.project_name}-app" }

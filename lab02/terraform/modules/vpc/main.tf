@@ -18,7 +18,7 @@ resource "aws_subnet" "public" {
   cidr_block              = var.public_subnet_cidr
   availability_zone       = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = false # Checkov: tắt auto-assign public IP mặc định (EC2 sẽ bật riêng nếu cần)
-  tags = { Name = "${var.project_name}-public-subnet" }
+  tags                    = { Name = "${var.project_name}-public-subnet" }
 }
 
 resource "aws_subnet" "private" {
@@ -112,8 +112,12 @@ resource "aws_iam_role_policy" "flow_log" {
         "logs:DescribeLogGroups",
         "logs:DescribeLogStreams"
       ]
-      Effect   = "Allow"
-      Resource = "*"
+      Effect = "Allow"
+      Resource = [
+        # Chỉ cho phép ghi vào log group của VPC này thôi
+        "arn:aws:logs:*:*:log-group:/aws/vpc/${var.project_name}-flow-logs",
+        "arn:aws:logs:*:*:log-group:/aws/vpc/${var.project_name}-flow-logs:*"
+      ]
     }]
   })
 }
